@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { MapContainer, TileLayer } from 'react-leaflet';
+import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 
 function App() {
   const [file, setFile] = useState(null);
@@ -13,8 +13,8 @@ function App() {
     formData.append('file', file);
 
     try {
-      const { data } = await axios.post('/upload', formData);
-      setCoordinates(data.coordinates);
+      const { data } = await axios.post('http://localhost:9494/', formData);
+      setCoordinates(data);
     } catch (error) {
       console.error(error);
     }
@@ -38,13 +38,17 @@ function App() {
 }
 
 function Map({ coordinates }) {
-  const position = [coordinates[0][1], coordinates[0][0]];
   return (
-    <MapContainer center={position} zoom={13} style={{ height: '400px', width: '100%' }}>
+    <MapContainer center={coordinates[0]} zoom={13} style={{ height: '400px', width: '100%' }}>
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
       />
+      {coordinates.map((coordinate, index) => (
+        <Marker key={index} position={coordinate}>
+          <Popup>A pretty CSS3 popup.<br />Easily customizable.</Popup>
+        </Marker>
+      ))}
     </MapContainer>
   );
 }
