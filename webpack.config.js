@@ -1,14 +1,12 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
-const leafletImageDir = path.resolve(
-  __dirname, 'node_modules/leaflet/dist/images');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
-  entry: './src/index.js',
+  entry: './src/index.tsx',
   output: {
     path: path.resolve(__dirname, 'build'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   },
   devtool: 'inline-source-map',
   module: {
@@ -17,35 +15,31 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader'
-        }
+          loader: 'babel-loader',
+        },
+      },
+      {
+        test: /\.(ts|tsx)$/,
+        exclude: /node_modules/,
+        use: 'ts-loader',
       },
       {
         test: /\.css$/,
         use: [
           'style-loader',
-          'css-loader'
-        ]
+          'css-loader',
+        ],
       },
-      {
-        test: /\.(png|jpg|jpeg|gif|svg)$/,
-        include: leafletImageDir,
-        use: {
-          loader: 'file-loader',
-          options: {
-            name: '[name].[ext]',
-          }
-        }
-      }
-    ]
+    ],
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html',
-      filename: 'index.html'
-    })
+      filename: 'index.html',
+    }),
+    new Dotenv(),
   ],
   resolve: {
-    extensions: ['.js', '.jsx']
-  }
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
+  },
 };

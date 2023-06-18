@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack --mode development --watch & webpack-dev-server --mode development"
+    "start": "webpack serve --mode development"
   },
   "author": "",
   "license": "ISC",
@@ -15,6 +15,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-leaflet": "^4.2.0",
+    "ts-loader": "^9.4.3",
     "typescript": "^5.1.3"
   },
   "devDependencies": {
@@ -22,9 +23,19 @@
     "@babel/core": "^7.20.12",
     "@babel/preset-env": "^7.20.2",
     "@babel/preset-react": "^7.18.6",
+    "@types/react": "^18.2.12",
+    "@types/react-dom": "^18.2.5",
+    "@typescript-eslint/eslint-plugin": "^5.59.11",
+    "@typescript-eslint/parser": "^5.59.11",
     "babel-loader": "^9.1.2",
     "css-loader": "^6.7.3",
     "dotenv-webpack": "^8.0.1",
+    "eslint": "^8.43.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-jsx-a11y": "^6.7.1",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
     "style-loader": "^3.3.1",
