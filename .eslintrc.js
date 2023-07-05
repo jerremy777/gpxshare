@@ -10,6 +10,7 @@ module.exports = {
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
+    google: 'readonly',
   },
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -26,7 +27,7 @@ module.exports = {
   ],
   rules: {
     // Allow jsx syntax in .tsx files
-    'react/jsx-filename-extension': [1, { extensions: ['.tsx', '.ts'] }],
+    'react/jsx-filename-extension': [1, { extensions: ['.tsx', '.ts', '.jsx', '.js'] }],
     // Disable import extensions rule
     'import/extensions': 'off',
     // Disable import/no-resolved rule for ts and tsx files
