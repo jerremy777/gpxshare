@@ -41,5 +41,10 @@ module.exports = {
   ],
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
+    fallback: {
+      timers: require.resolve('timers-browserify'),
+      stream: require.resolve('stream-browserify'),
+      buffer: require.resolve('buffer/'),
+    },
   },
 };

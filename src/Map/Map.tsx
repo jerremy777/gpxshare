@@ -9,17 +9,29 @@ const API_KEY = process.env.GOOGLE_MAPS_API_KEY || '';
 interface MapProps {
   id: string;
   options: google.maps.MapOptions;
-  gpx?: string;
+  segments: google.maps.LatLngLiteral[][] | null;
 }
 
-function MapRenderer({ id, options }: MapProps) {
+function MapRenderer({ id, options, segments }: MapProps) {
   const mapRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (mapRef.current) {
-      new window.google.maps.Map(mapRef.current, options);
+      const map = new window.google.maps.Map(mapRef.current, options);
+      if (segments) {
+        segments.forEach((segment) => {
+          const polyline = new window.google.maps.Polyline({
+            path: segment,
+            strokeColor: '#FF0000',
+            strokeOpacity: 1.0,
+            strokeWeight: 2,
+          });
+          console.log('polyline: ', polyline);
+          polyline.setMap(map);
+        });
+      }
     }
-  });
+  }, [mapRef, options, segments]);
 
   return (
     <div style={{ width: 500, height: 500 }} id={id} ref={mapRef} />
@@ -27,7 +39,7 @@ function MapRenderer({ id, options }: MapProps) {
 }
 
 function Map(props: MapProps) {
-  const { id, options } = props;
+  const { id, options, segments } = props;
 
   // Create a new map once the Google Maps API loads
   const renderMap = (status: Status) => {
@@ -37,7 +49,7 @@ function Map(props: MapProps) {
       case Status.FAILURE:
         return <div>Failed to load Google Maps</div>;
       case Status.SUCCESS:
-        return <MapRenderer id={id} options={options} />;
+        return <MapRenderer id={id} options={options} segments={segments} />;
       default:
         return <div>Something went wrong</div>;
     }
